@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ClientsMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Clients">
+    <id column="ClientId" jdbcType="INTEGER" property="clientid" />
+    <result column="CName" jdbcType="VARCHAR" property="cname" />
+    <result column="CSex" jdbcType="VARCHAR" property="csex" />
+    <result column="CTele" jdbcType="VARCHAR" property="ctele" />
+    <result column="CLocation" jdbcType="VARCHAR" property="clocation" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ClientId, CName, CSex, CTele, CLocation, pwd, uname
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from clients
+    where ClientId = #{clientid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from clients
+    where ClientId = #{clientid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Clients">
+    insert into clients (ClientId, CName, CSex, 
+      CTele, CLocation, pwd, 
+      uname)
+    values (#{clientid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{csex,jdbcType=VARCHAR}, 
+      #{ctele,jdbcType=VARCHAR}, #{clocation,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+      #{uname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Clients">
+    insert into clients
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="clientid != null">
+        ClientId,
+      </if>
+      <if test="cname != null">
+        CName,
+      </if>
+      <if test="csex != null">
+        CSex,
+      </if>
+      <if test="ctele != null">
+        CTele,
+      </if>
+      <if test="clocation != null">
+        CLocation,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="clientid != null">
+        #{clientid,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="csex != null">
+        #{csex,jdbcType=VARCHAR},
+      </if>
+      <if test="ctele != null">
+        #{ctele,jdbcType=VARCHAR},
+      </if>
+      <if test="clocation != null">
+        #{clocation,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Clients">
+    update clients
+    <set>
+      <if test="cname != null">
+        CName = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="csex != null">
+        CSex = #{csex,jdbcType=VARCHAR},
+      </if>
+      <if test="ctele != null">
+        CTele = #{ctele,jdbcType=VARCHAR},
+      </if>
+      <if test="clocation != null">
+        CLocation = #{clocation,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ClientId = #{clientid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Clients">
+    update clients
+    set CName = #{cname,jdbcType=VARCHAR},
+      CSex = #{csex,jdbcType=VARCHAR},
+      CTele = #{ctele,jdbcType=VARCHAR},
+      CLocation = #{clocation,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR}
+    where ClientId = #{clientid,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+  <select id="adminLogin" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from clients
+    where  uname = #{uname,jdbcType=VARCHAR} and pwd=#{pwd,jdbcType=VARCHAR}
+  </select>
+  <select id="checkUname" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from clients
+    where uname = #{uname,jdbcType=VARCHAR} and 1=1
+  </select>
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) from clients  where 1=1
+
+    <if test="cname != null">
+      and CName like  concat('%',#{cname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="csex != null">
+      and  CSex = #{csex,jdbcType=VARCHAR}
+    </if>
+    <if test="ctele != null">
+     and CTele = #{ctele,jdbcType=VARCHAR}
+    </if>
+    <if test="clocation != null">
+     and CLocation = #{clocation,jdbcType=VARCHAR}
+    </if>
+    <if test="pwd != null">
+      and pwd = #{pwd,jdbcType=VARCHAR}
+    </if>
+    <if test="uname != null">
+      and uname like  concat('%',#{uname,jdbcType=VARCHAR},'%')
+    </if>
+
+  </select>
+  <select id="getAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+
+    from clients  where 1=1
+    <if test="cname != null">
+      and CName like  concat('%',#{cname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="csex != null">
+      and  CSex = #{csex,jdbcType=VARCHAR}
+    </if>
+    <if test="ctele != null">
+      and CTele = #{ctele,jdbcType=VARCHAR}
+    </if>
+    <if test="clocation != null">
+      and CLocation = #{clocation,jdbcType=VARCHAR}
+    </if>
+    <if test="pwd != null">
+      and pwd = #{pwd,jdbcType=VARCHAR}
+    </if>
+    <if test="uname != null">
+      and uname like  concat('%',#{uname,jdbcType=VARCHAR},'%')
+    </if>
+    order by ClientId desc
+  </select>
+  <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from clients where 1=1
+    <if test="cname != null">
+      and CName like  concat('%',#{cname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="csex != null">
+      and  CSex = #{csex,jdbcType=VARCHAR}
+    </if>
+    <if test="ctele != null">
+      and CTele = #{ctele,jdbcType=VARCHAR}
+    </if>
+    <if test="clocation != null">
+      and CLocation = #{clocation,jdbcType=VARCHAR}
+    </if>
+    <if test="pwd != null">
+      and pwd = #{pwd,jdbcType=VARCHAR}
+    </if>
+    <if test="uname != null">
+      and uname like  concat('%',#{uname,jdbcType=VARCHAR},'%')
+    </if>
+    order by ClientId desc
+    <if test="pageno!=null and pageSize!=null">
+      limit #{pageno},#{pageSize}
+    </if>
+  </select>
+</mapper>

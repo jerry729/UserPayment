@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.CommodityMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Commodity">
+    <id column="ComId" jdbcType="INTEGER" property="comid" />
+    <result column="ComName" jdbcType="VARCHAR" property="comname" />
+    <result column="UnitPrice" jdbcType="DOUBLE" property="unitprice" />
+    <result column="Reserve" jdbcType="INTEGER" property="reserve" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ComId, ComName, UnitPrice, Reserve
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from commodity
+    where ComId = #{comid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from commodity
+    where ComId = #{comid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Commodity">
+    insert into commodity (ComId, ComName, UnitPrice, 
+      Reserve)
+    values (#{comid,jdbcType=INTEGER}, #{comname,jdbcType=VARCHAR}, #{unitprice,jdbcType=DOUBLE}, 
+      #{reserve,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Commodity">
+    insert into commodity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="comid != null">
+        ComId,
+      </if>
+      <if test="comname != null">
+        ComName,
+      </if>
+      <if test="unitprice != null">
+        UnitPrice,
+      </if>
+      <if test="reserve != null">
+        Reserve,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="comid != null">
+        #{comid,jdbcType=INTEGER},
+      </if>
+      <if test="comname != null">
+        #{comname,jdbcType=VARCHAR},
+      </if>
+      <if test="unitprice != null">
+        #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="reserve != null">
+        #{reserve,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Commodity">
+    update commodity
+    <set>
+      <if test="comname != null">
+        ComName = #{comname,jdbcType=VARCHAR},
+      </if>
+      <if test="unitprice != null">
+        UnitPrice = #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="reserve != null">
+        Reserve = #{reserve,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ComId = #{comid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Commodity">
+    update commodity
+    set ComName = #{comname,jdbcType=VARCHAR},
+      UnitPrice = #{unitprice,jdbcType=DOUBLE},
+      Reserve = #{reserve,jdbcType=INTEGER}
+    where ComId = #{comid,jdbcType=INTEGER}
+  </update>
+
+
+
+
+  
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) from commodity  where 1=1
+
+    <if test="comname != null">
+      and ComName like  concat('%',#{comname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="unitprice != null">
+      and UnitPrice = #{unitprice,jdbcType=DOUBLE}
+    </if>
+    <if test="reserve != null">
+      and Reserve = #{reserve,jdbcType=INTEGER}
+    </if>
+
+  </select>
+  <select id="getAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+
+    from commodity  where 1=1
+    <if test="comname != null">
+      and ComName like  concat('%',#{comname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="unitprice != null">
+      and UnitPrice = #{unitprice,jdbcType=DOUBLE}
+    </if>
+    <if test="reserve != null">
+      and Reserve = #{reserve,jdbcType=INTEGER}
+    </if>
+
+    order by ComId desc
+  </select>
+  <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from commodity where 1=1
+    <if test="comname != null">
+      and ComName like  concat('%',#{comname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="unitprice != null">
+      and UnitPrice = #{unitprice,jdbcType=DOUBLE}
+    </if>
+    <if test="reserve != null">
+      and Reserve = #{reserve,jdbcType=INTEGER}
+    </if>
+    order by ComId desc
+    <if test="pageno!=null and pageSize!=null">
+      limit #{pageno},#{pageSize}
+    </if>
+  </select>
+
+
+</mapper>

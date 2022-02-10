@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.RecordMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Record">
+    <id column="RId" jdbcType="INTEGER" property="rid" />
+    <result column="spid" jdbcType="INTEGER" property="spid" />
+    <result column="clientid" jdbcType="INTEGER" property="clientid" />
+    <result column="CtrctId" jdbcType="INTEGER" property="ctrctid" />
+    <result column="RcrdT" jdbcType="VARCHAR" property="rcrdt" />
+    <result column="RcrdQuant" jdbcType="DOUBLE" property="rcrdquant" />
+    <result column="BillId" jdbcType="INTEGER" property="billid" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="pubtime" jdbcType="VARCHAR" property="pubtime" />
+    <result column="mark" jdbcType="VARCHAR" property="mark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    RId, spid, clientid, CtrctId, RcrdT, RcrdQuant, BillId, `status`, pubtime, mark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from record
+    where RId = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from record
+    where RId = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Record">
+    insert into record (RId, spid, clientid, 
+      CtrctId, RcrdT, RcrdQuant, 
+      BillId, `status`, pubtime, 
+      mark)
+    values (#{rid,jdbcType=INTEGER}, #{spid,jdbcType=INTEGER}, #{clientid,jdbcType=INTEGER}, 
+      #{ctrctid,jdbcType=INTEGER}, #{rcrdt,jdbcType=VARCHAR}, #{rcrdquant,jdbcType=DOUBLE}, 
+      #{billid,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{pubtime,jdbcType=VARCHAR}, 
+      #{mark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Record">
+    insert into record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        RId,
+      </if>
+      <if test="spid != null">
+        spid,
+      </if>
+      <if test="clientid != null">
+        clientid,
+      </if>
+      <if test="ctrctid != null">
+        CtrctId,
+      </if>
+      <if test="rcrdt != null">
+        RcrdT,
+      </if>
+      <if test="rcrdquant != null">
+        RcrdQuant,
+      </if>
+      <if test="billid != null">
+        BillId,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="pubtime != null">
+        pubtime,
+      </if>
+      <if test="mark != null">
+        mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null">
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="clientid != null">
+        #{clientid,jdbcType=INTEGER},
+      </if>
+      <if test="ctrctid != null">
+        #{ctrctid,jdbcType=INTEGER},
+      </if>
+      <if test="rcrdt != null">
+        #{rcrdt,jdbcType=VARCHAR},
+      </if>
+      <if test="rcrdquant != null">
+        #{rcrdquant,jdbcType=DOUBLE},
+      </if>
+      <if test="billid != null">
+        #{billid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        #{pubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null">
+        #{mark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Record">
+    update record
+    <set>
+      <if test="spid != null">
+        spid = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="clientid != null">
+        clientid = #{clientid,jdbcType=INTEGER},
+      </if>
+      <if test="ctrctid != null">
+        CtrctId = #{ctrctid,jdbcType=INTEGER},
+      </if>
+      <if test="rcrdt != null">
+        RcrdT = #{rcrdt,jdbcType=VARCHAR},
+      </if>
+      <if test="rcrdquant != null">
+        RcrdQuant = #{rcrdquant,jdbcType=DOUBLE},
+      </if>
+      <if test="billid != null">
+        BillId = #{billid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        pubtime = #{pubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null">
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RId = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Record">
+    update record
+    set spid = #{spid,jdbcType=INTEGER},
+      clientid = #{clientid,jdbcType=INTEGER},
+      CtrctId = #{ctrctid,jdbcType=INTEGER},
+      RcrdT = #{rcrdt,jdbcType=VARCHAR},
+      RcrdQuant = #{rcrdquant,jdbcType=DOUBLE},
+      BillId = #{billid,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=VARCHAR},
+      pubtime = #{pubtime,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=VARCHAR}
+    where RId = #{rid,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) from record  where 1=1
+    <if test="name!=null">
+      and name like  concat('%',#{name,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
+  <select id="getAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+
+    from record  where 1=1
+
+    <if test="spid != null">
+      and spid = #{spid,jdbcType=INTEGER}
+    </if>
+    <if test="clientid != null">
+      and clientid = #{clientid,jdbcType=INTEGER}
+    </if>
+
+    <if test="ctrctid != null">
+      and CtrctId = #{ctrctid,jdbcType=INTEGER}
+    </if>
+    <if test="rcrdt != null">
+      and RcrdT = #{rcrdt,jdbcType=VARCHAR}
+    </if>
+    <if test="rcrdquant != null">
+      and RcrdQuant = #{rcrdquant,jdbcType=DOUBLE}
+    </if>
+    <if test="billid != null">
+      and BillId = #{billid,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+      and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="mark != null">
+     and mark = #{mark,jdbcType=VARCHAR}
+    </if>
+
+    order by RId desc
+  </select>
+  <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+
+    from record where 1=1
+    <if test="spid != null">
+      and spid = #{spid,jdbcType=INTEGER}
+    </if>
+    <if test="clientid != null">
+      and clientid = #{clientid,jdbcType=INTEGER}
+    </if>
+    <if test="ctrctid != null">
+      and CtrctId = #{ctrctid,jdbcType=INTEGER}
+    </if>
+    <if test="rcrdt != null">
+      and RcrdT = #{rcrdt,jdbcType=VARCHAR}
+    </if>
+    <if test="rcrdquant != null">
+      and RcrdQuant = #{rcrdquant,jdbcType=DOUBLE}
+    </if>
+    <if test="billid != null">
+      and BillId = #{billid,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+      and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="mark != null">
+      and mark = #{mark,jdbcType=VARCHAR}
+    </if>
+    order by RId desc
+    <if test="pageno!=null and pageSize!=null">
+      limit #{pageno},#{pageSize}
+    </if>
+  </select>
+
+
+</mapper>

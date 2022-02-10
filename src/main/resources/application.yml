@@ -1,0 +1,30 @@
+server:
+  servlet:
+    context-path: /kehuhuikuan
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: jdbc:mysql://127.0.0.1:3306/kehuhuikuan?characterEncoding=utf-8
+    password: Snake010729!
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+    static-path-pattern: /**
+
+  servlet:
+    multipart:
+      enabled: true #是否启用http上传处理
+      max-request-size: 100MB #最大请求文件的大小
+      max-file-size: 80MB #设置单个文件最大长度
+      file-size-threshold: 80MB #当文件达到多少时进行磁盘写入
+mybatis:
+  mapper-locations: classpath:com/mapper/*.xml
+
+
+

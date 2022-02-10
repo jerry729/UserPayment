@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Message">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="fid" jdbcType="INTEGER" property="fid" />
+    <result column="jid" jdbcType="INTEGER" property="jid" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="pubtime" jdbcType="VARCHAR" property="pubtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, fid, jid, note, pubtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Message">
+    insert into message (id, `name`, fid, 
+      jid, note, pubtime)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{fid,jdbcType=INTEGER}, 
+      #{jid,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, #{pubtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Message">
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="fid != null">
+        fid,
+      </if>
+      <if test="jid != null">
+        jid,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="pubtime != null">
+        pubtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fid != null">
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="jid != null">
+        #{jid,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        #{pubtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Message">
+    update message
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fid != null">
+        fid = #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="jid != null">
+        jid = #{jid,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        pubtime = #{pubtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Message">
+    update message
+    set `name` = #{name,jdbcType=VARCHAR},
+      fid = #{fid,jdbcType=INTEGER},
+      jid = #{jid,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      pubtime = #{pubtime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) from message  where 1=1
+
+    <if test="name != null">
+      and `name` like concat('%',#{name,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="fid != null">
+      and fid = #{fid,jdbcType=INTEGER}
+    </if>
+    <if test="jid != null">
+      and jid = #{jid,jdbcType=INTEGER}
+    </if>
+
+  </select>
+  <select id="getAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+
+    from message  where 1=1
+    <if test="name != null">
+      and `name` like concat('%',#{name,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="fid != null">
+      and fid = #{fid,jdbcType=INTEGER}
+    </if>
+    <if test="jid != null">
+      and jid = #{jid,jdbcType=INTEGER}
+    </if>
+
+    order by id desc
+  </select>
+  <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from message where 1=1
+    <if test="name != null">
+      and `name` like concat('%',#{name,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="fid != null">
+      and fid = #{fid,jdbcType=INTEGER}
+    </if>
+    <if test="jid != null">
+      and jid = #{jid,jdbcType=INTEGER}
+    </if>
+    order by id desc
+    <if test="pageno!=null and pageSize!=null">
+      limit #{pageno},#{pageSize}
+    </if>
+  </select>
+
+</mapper>

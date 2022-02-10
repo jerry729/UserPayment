@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ContractsMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Contracts">
+    <id column="CtrctId" jdbcType="INTEGER" property="ctrctid" />
+    <result column="CtrctName" jdbcType="VARCHAR" property="ctrctname" />
+    <result column="ClientId" jdbcType="INTEGER" property="clientid" />
+    <result column="SpId" jdbcType="INTEGER" property="spid" />
+    <result column="SignedT" jdbcType="VARCHAR" property="signedt" />
+    <result column="ExpireT" jdbcType="VARCHAR" property="expiret" />
+    <result column="ComId" jdbcType="INTEGER" property="comid" />
+    <result column="ComQuant" jdbcType="INTEGER" property="comquant" />
+    <result column="Amount" jdbcType="DOUBLE" property="amount" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="pubtime" jdbcType="VARCHAR" property="pubtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CtrctId, CtrctName, ClientId, SpId, SignedT, ExpireT, ComId, ComQuant, Amount, `status`, 
+    pubtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from contracts
+    where CtrctId = #{ctrctid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from contracts
+    where CtrctId = #{ctrctid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Contracts">
+    insert into contracts (CtrctId, CtrctName, ClientId, 
+      SpId, SignedT, ExpireT, 
+      ComId, ComQuant, Amount, 
+      `status`, pubtime)
+    values (#{ctrctid,jdbcType=INTEGER}, #{ctrctname,jdbcType=VARCHAR}, #{clientid,jdbcType=INTEGER}, 
+      #{spid,jdbcType=INTEGER}, #{signedt,jdbcType=VARCHAR}, #{expiret,jdbcType=VARCHAR}, 
+      #{comid,jdbcType=INTEGER}, #{comquant,jdbcType=INTEGER}, #{amount,jdbcType=DOUBLE}, 
+      #{status,jdbcType=VARCHAR}, #{pubtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Contracts">
+    insert into contracts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ctrctid != null">
+        CtrctId,
+      </if>
+      <if test="ctrctname != null">
+        CtrctName,
+      </if>
+      <if test="clientid != null">
+        ClientId,
+      </if>
+      <if test="spid != null">
+        SpId,
+      </if>
+      <if test="signedt != null">
+        SignedT,
+      </if>
+      <if test="expiret != null">
+        ExpireT,
+      </if>
+      <if test="comid != null">
+        ComId,
+      </if>
+      <if test="comquant != null">
+        ComQuant,
+      </if>
+      <if test="amount != null">
+        Amount,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="pubtime != null">
+        pubtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ctrctid != null">
+        #{ctrctid,jdbcType=INTEGER},
+      </if>
+      <if test="ctrctname != null">
+        #{ctrctname,jdbcType=VARCHAR},
+      </if>
+      <if test="clientid != null">
+        #{clientid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null">
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="signedt != null">
+        #{signedt,jdbcType=VARCHAR},
+      </if>
+      <if test="expiret != null">
+        #{expiret,jdbcType=VARCHAR},
+      </if>
+      <if test="comid != null">
+        #{comid,jdbcType=INTEGER},
+      </if>
+      <if test="comquant != null">
+        #{comquant,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        #{pubtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Contracts">
+    update contracts
+    <set>
+      <if test="ctrctname != null">
+        CtrctName = #{ctrctname,jdbcType=VARCHAR},
+      </if>
+      <if test="clientid != null">
+        ClientId = #{clientid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null">
+        SpId = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="signedt != null">
+        SignedT = #{signedt,jdbcType=VARCHAR},
+      </if>
+      <if test="expiret != null">
+        ExpireT = #{expiret,jdbcType=VARCHAR},
+      </if>
+      <if test="comid != null">
+        ComId = #{comid,jdbcType=INTEGER},
+      </if>
+      <if test="comquant != null">
+        ComQuant = #{comquant,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        Amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        pubtime = #{pubtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CtrctId = #{ctrctid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Contracts">
+    update contracts
+    set CtrctName = #{ctrctname,jdbcType=VARCHAR},
+      ClientId = #{clientid,jdbcType=INTEGER},
+      SpId = #{spid,jdbcType=INTEGER},
+      SignedT = #{signedt,jdbcType=VARCHAR},
+      ExpireT = #{expiret,jdbcType=VARCHAR},
+      ComId = #{comid,jdbcType=INTEGER},
+      ComQuant = #{comquant,jdbcType=INTEGER},
+      Amount = #{amount,jdbcType=DOUBLE},
+      `status` = #{status,jdbcType=VARCHAR},
+      pubtime = #{pubtime,jdbcType=VARCHAR}
+    where CtrctId = #{ctrctid,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) from contracts  where 1=1
+
+
+
+    <if test="ctrctname != null">
+      and CtrctName like  concat('%',#{ctrctname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="clientid != null">
+     and ClientId = #{clientid,jdbcType=INTEGER}
+    </if>
+    <if test="spid != null">
+     and  SpId = #{spid,jdbcType=INTEGER}
+    </if>
+    <if test="signedt != null">
+      and SignedT = #{signedt,jdbcType=VARCHAR}
+    </if>
+    <if test="expiret != null">
+      and ExpireT = #{expiret,jdbcType=VARCHAR}
+    </if>
+    <if test="comid != null">
+      and ComId = #{comid,jdbcType=INTEGER}
+    </if>
+    <if test="comquant != null">
+     and ComQuant = #{comquant,jdbcType=INTEGER}
+    </if>
+    <if test="amount != null">
+     and Amount = #{amount,jdbcType=DOUBLE}
+    </if>
+    <if test="status != null">
+     and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+
+  </select>
+  <select id="getAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+
+    from contracts  where 1=1
+    <if test="ctrctname != null">
+      and CtrctName like  concat('%',#{ctrctname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="clientid != null">
+      and ClientId = #{clientid,jdbcType=INTEGER}
+    </if>
+    <if test="spid != null">
+      and  SpId = #{spid,jdbcType=INTEGER}
+    </if>
+    <if test="signedt != null">
+      and SignedT = #{signedt,jdbcType=VARCHAR}
+    </if>
+    <if test="expiret != null">
+      and ExpireT = #{expiret,jdbcType=VARCHAR}
+    </if>
+    <if test="comid != null">
+      and ComId = #{comid,jdbcType=INTEGER}
+    </if>
+    <if test="comquant != null">
+      and ComQuant = #{comquant,jdbcType=INTEGER}
+    </if>
+    <if test="amount != null">
+      and Amount = #{amount,jdbcType=DOUBLE}
+    </if>
+    <if test="status != null">
+      and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+
+    order by CtrctId desc
+  </select>
+  <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from contracts where 1=1
+    <if test="ctrctname != null">
+      and CtrctName like  concat('%',#{ctrctname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="clientid != null">
+      and ClientId = #{clientid,jdbcType=INTEGER}
+    </if>
+    <if test="spid != null">
+      and  SpId = #{spid,jdbcType=INTEGER}
+    </if>
+    <if test="signedt != null">
+      and SignedT = #{signedt,jdbcType=VARCHAR}
+    </if>
+    <if test="expiret != null">
+      and ExpireT = #{expiret,jdbcType=VARCHAR}
+    </if>
+    <if test="comid != null">
+      and ComId = #{comid,jdbcType=INTEGER}
+    </if>
+    <if test="comquant != null">
+      and ComQuant = #{comquant,jdbcType=INTEGER}
+    </if>
+    <if test="amount != null">
+      and Amount = #{amount,jdbcType=DOUBLE}
+    </if>
+    <if test="status != null">
+      and `status` = #{status,jdbcType=VARCHAR}
+    </if>
+    order by CtrctId desc
+    <if test="pageno!=null and pageSize!=null">
+      limit #{pageno},#{pageSize}
+    </if>
+  </select>
+</mapper>

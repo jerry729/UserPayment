@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.SalesPersonMapper">
+  <resultMap id="BaseResultMap" type="com.entity.SalesPerson">
+    <id column="SPId" jdbcType="INTEGER" property="spid" />
+    <result column="SpName" jdbcType="VARCHAR" property="spname" />
+    <result column="SpSex" jdbcType="VARCHAR" property="spsex" />
+    <result column="SpAge" jdbcType="VARCHAR" property="spage" />
+    <result column="SpPosition" jdbcType="VARCHAR" property="spposition" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="pubtime" jdbcType="VARCHAR" property="pubtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SPId, SpName, SpSex, SpAge, SpPosition, uname, pwd, pubtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from salesperson
+    where SPId = #{spid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from salesperson
+    where SPId = #{spid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.SalesPerson">
+    insert into salesperson (SPId, SpName, SpSex, 
+      SpAge, SpPosition, uname, 
+      pwd, pubtime)
+    values (#{spid,jdbcType=INTEGER}, #{spname,jdbcType=VARCHAR}, #{spsex,jdbcType=VARCHAR}, 
+      #{spage,jdbcType=VARCHAR}, #{spposition,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
+      #{pwd,jdbcType=VARCHAR}, #{pubtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.SalesPerson">
+    insert into salesperson
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="spid != null">
+        SPId,
+      </if>
+      <if test="spname != null">
+        SpName,
+      </if>
+      <if test="spsex != null">
+        SpSex,
+      </if>
+      <if test="spage != null">
+        SpAge,
+      </if>
+      <if test="spposition != null">
+        SpPosition,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="pubtime != null">
+        pubtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="spid != null">
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="spname != null">
+        #{spname,jdbcType=VARCHAR},
+      </if>
+      <if test="spsex != null">
+        #{spsex,jdbcType=VARCHAR},
+      </if>
+      <if test="spage != null">
+        #{spage,jdbcType=VARCHAR},
+      </if>
+      <if test="spposition != null">
+        #{spposition,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        #{pubtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.SalesPerson">
+    update salesperson
+    <set>
+      <if test="spname != null">
+        SpName = #{spname,jdbcType=VARCHAR},
+      </if>
+      <if test="spsex != null">
+        SpSex = #{spsex,jdbcType=VARCHAR},
+      </if>
+      <if test="spage != null">
+        SpAge = #{spage,jdbcType=VARCHAR},
+      </if>
+      <if test="spposition != null">
+        SpPosition = #{spposition,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        pubtime = #{pubtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SPId = #{spid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.SalesPerson">
+    update salesperson
+    set SpName = #{spname,jdbcType=VARCHAR},
+      SpSex = #{spsex,jdbcType=VARCHAR},
+      SpAge = #{spage,jdbcType=VARCHAR},
+      SpPosition = #{spposition,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      pubtime = #{pubtime,jdbcType=VARCHAR}
+    where SPId = #{spid,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+
+  <select id="adminLogin" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from salesperson
+    where  uname = #{uname,jdbcType=VARCHAR} and pwd=#{pwd,jdbcType=VARCHAR}
+  </select>
+  <select id="checkUname" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from salesperson
+    where uname = #{uname,jdbcType=VARCHAR} and 1=1
+  </select>
+  <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) from salesperson  where 1=1
+
+    <if test="spname != null">
+      and SpName like  concat('%',#{spname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="spsex != null">
+      and  SpSex = #{spsex,jdbcType=VARCHAR}
+    </if>
+    <if test="spage != null">
+      SpAge = #{spage,jdbcType=VARCHAR},
+    </if>
+    <if test="spposition != null">
+      SpPosition = #{spposition,jdbcType=VARCHAR},
+    </if>
+
+    <if test="pwd != null">
+      and pwd = #{pwd,jdbcType=VARCHAR}
+    </if>
+    <if test="uname != null">
+      and uname like  concat('%',#{uname,jdbcType=VARCHAR},'%')
+    </if>
+
+  </select>
+  <select id="getAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+
+    from salesperson  where 1=1
+    <if test="spname != null">
+      and SpName like  concat('%',#{spname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="spsex != null">
+      and  SpSex = #{spsex,jdbcType=VARCHAR}
+    </if>
+    <if test="spage != null">
+      SpAge = #{spage,jdbcType=VARCHAR},
+    </if>
+    <if test="spposition != null">
+      SpPosition = #{spposition,jdbcType=VARCHAR},
+    </if>
+    <if test="pwd != null">
+      and pwd = #{pwd,jdbcType=VARCHAR}
+    </if>
+    <if test="uname != null">
+      and uname like  concat('%',#{uname,jdbcType=VARCHAR},'%')
+    </if>
+    order by SPId desc
+  </select>
+  <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from salesperson where 1=1
+    <if test="spname != null">
+      and SpName like  concat('%',#{spname,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="spsex != null">
+      and  SpSex = #{spsex,jdbcType=VARCHAR}
+    </if>
+    <if test="spage != null">
+      SpAge = #{spage,jdbcType=VARCHAR},
+    </if>
+    <if test="spposition != null">
+      SpPosition = #{spposition,jdbcType=VARCHAR},
+    </if>
+    <if test="pwd != null">
+      and pwd = #{pwd,jdbcType=VARCHAR}
+    </if>
+    <if test="uname != null">
+      and uname like  concat('%',#{uname,jdbcType=VARCHAR},'%')
+    </if>
+    order by SPId desc
+    <if test="pageno!=null and pageSize!=null">
+      limit #{pageno},#{pageSize}
+    </if>
+  </select>
+
+</mapper>
